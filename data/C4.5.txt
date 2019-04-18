@@ -1,0 +1,16 @@
+years jobs house credit
+young N N normal N
+young N N good N
+young Y N good Y
+young Y Y normal Y
+young N N normal N
+mid N N normal N
+mid N N good N
+mid Y Y good Y
+mid N Y verygood Y
+mid N Y verygood Y
+old N Y verygood Y
+old N Y good Y
+old Y N good Y
+old Y N verygood Y
+old N N normal N

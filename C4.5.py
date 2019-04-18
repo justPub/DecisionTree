@@ -1,33 +1,48 @@
 # -*- coding: utf-8 -*-
 from math import log
 import treePlot
+import os
+import sys
+
+inputOriginFile = "./data/C4.5.txt"
+inputTestFile = "./data/dataTest.txt"
 
 # 创建原始数据集
-def createDataSet():
+def createDataSet(filename):
     '''
-    :return: 原始数据集，特征
+    :param filename: 训练数据集
+    :return: 训练数据集，特征
     '''
-    dataSet = [["sunny", "hot", "high", "false", 'N'],
-               ["sunny", "hot", "high", "true", 'N'],
-               ["overcast", "hot", "high", "false", 'Y'],
-               ["rain", "mild", "high", "false", 'Y'],
-               ["rain", "cool", "normal", "false", 'Y'],
-               ["rain", "cool", "normal", "true", 'N'],
-               ["overcast", "cool", "normal", "true", 'Y']]
-    labels = ['outlook', 'temperature', 'humidity', 'windy']
-    return dataSet, labels
+    fhandle = open(filename)
+    head=fhandle.readline()
+    labels=head.split()
+
+    dataSet=[]
+    while True:
+        lines=fhandle.readline()
+        if not lines:
+            break
+            pass
+        dtmp=lines.split()
+        dataSet.append(dtmp)
+    fhandle.close()
+    return dataSet,labels
 
 # 创建测试数据集
-def createTestSet():
+def createTestSet(filename):
     '''
     :return: 测试数据集
     '''
-    testSet = [["sunny", "mild", "high", "false"],
-               ["rain", "mild", "normal", "false"],
-               ["sunny", "mild", "normal", "true"],
-               ["overcast", "mild", "high", "true"],
-               ["overcast", "hot", "normal", "false"],
-               ["rain", "mild", "high", "true"]]
+    fhandle = open(filename)
+    testSet = []
+    while True:
+        lines = fhandle.readline()
+        if not lines:
+            break
+            pass
+        dtmp = lines.split()
+        testSet.append(dtmp)
+    fhandle.close()
     return testSet
 
 # 测试数据集分类
@@ -153,10 +168,10 @@ def createTree(dataSet, labels):
     return myTree
 
 if __name__ == '__main__':
-    dataSet, labels = createDataSet() # 创建原始数据集
+    dataSet, labels = createDataSet(inputOriginFile) # 创建原始数据集
     labelsTmp = labels[:]
     desicionTree = createTree(dataSet, labelsTmp) # 创建决策树
     print('desicionTree:\n', desicionTree)
     treePlot.createPlot(desicionTree) # 绘制决策树
-    testSet = createTestSet() # 创建测试数据集
+    testSet = createTestSet(inputTestFile) # 创建测试数据集
     print('classifyResult:\n', classifyAll(desicionTree, labels, testSet)) # 测试数据集分类
